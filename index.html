@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>selector example</title>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="knockout.js"></script>
+</head>
+<body>
+	<select name="ratings" id="selector-ratings">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+	</select>
+	<ul data-bind="foreach: { data: places, as: 'place' }">
+	    <li data-bind="text: place.name, visible: place.show ">
+	    </li>
+	</ul>
+	 
+	<script>
+	   $("#selector-ratings").change(function() { 
+	   		var val = $("#selector-ratings").val()
+			viewModel.places().forEach(function(place, index){
+				if (place.rating===val){
+					place.show(true);
+				} else {
+					place.show(false);
+				}
+			});
+	    });
+	    var viewModel = {
+	        places: ko.observableArray([
+	        	{
+					name : 'place 1',
+					rating : '4',
+					show : ko.observable(true)
+				},
+				{
+					name : 'place 2',
+					rating : '2',
+					show : ko.observable(true)
+				},
+				{
+					name : 'place 3',
+					rating : '2',
+					show : ko.observable(true)
+				},
+				{
+					name: 'place 4',
+					rating : '3',
+					show : ko.observable(true)
+				},
+				{
+					name : 'place 5',
+					rating : '3',
+					show : ko.observable(true)
+				}
+	        ])
+	    };
+	    ko.applyBindings(viewModel);
+	</script>
+</body>
+</html>
